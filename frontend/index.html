@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cadastrar Aluno</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 8px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      #resposta {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cadastro de Aluno</h1>
+    <form id="formAluno">
+      <input
+        type="text"
+        name="nome_completo"
+        placeholder="Nome Completo"
+        required
+      /><br />
+      <input
+        type="text"
+        name="usuario_acesso"
+        placeholder="Usuário de Acesso"
+        required
+      /><br />
+      <input type="password" name="senha" placeholder="Senha" required /><br />
+      <input
+        type="email"
+        name="email_aluno"
+        placeholder="E-mail"
+        required
+      /><br />
+      <textarea
+        name="observacao"
+        placeholder="Observações (opcional)"
+      ></textarea
+      ><br />
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <div id="resposta"></div>
+
+    <script>
+      document
+        .getElementById("formAluno")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const dados = Object.fromEntries(new FormData(e.target).entries());
+
+          const res = await fetch("http://localhost:8080/api/alunos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados),
+          });
+
+          const json = await res.json();
+          document.getElementById("resposta").textContent = json.mensagem;
+        });
+    </script>
+  </body>
+</html>
