@@ -72,11 +72,14 @@
 
           const dados = Object.fromEntries(new FormData(e.target).entries());
 
-          const res = await fetch("http://localhost:8080/api/alunos", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dados),
-          });
+          const res = await fetch(
+            "https://desenvolvimento-ra1p.onrender.com/api/alunos",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dados),
+            }
+          );
 
           const json = await res.json();
           document.getElementById("resposta").textContent = json.mensagem;
